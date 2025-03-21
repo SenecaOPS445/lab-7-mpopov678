@@ -40,3 +40,26 @@ def valid_time(t):
     if t.minute >= 60 or t.second >= 60 or t.hour >= 24:
        return False
     return True
+
+def change_time(time, seconds):
+    time.second += seconds
+    if valid_time(time) != True:
+        temp_seconds = time_to_sec(time)
+        temp_time = sec_to_time(temp_seconds)
+        time.hour = temp_time.hour
+        time.minute = temp_time.minute
+        time.second = temp_time.second
+    return None
+
+def time_to_sec(time):
+    '''convert a time object to a single integer representing the number of seconds from mid-night'''
+    minutes = time.hour * 60 + time.minute
+    seconds = minutes * 60 + time.second
+    return seconds
+
+def sec_to_time(seconds):   
+    '''convert a given number of seconds to a time object in hour,minute,second format'''
+    time = Time()
+    minutes, time.second = divmod(seconds, 60)
+    time.hour, time.minute = divmod(minutes,60)
+    return time
